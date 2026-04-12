@@ -14,5 +14,11 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->reportable(function (Throwable $e) {
+            \App\Exceptions\Handler::report($e);
+        });
+
+        $exceptions->render(function (Throwable $e, \Illuminate\Http\Request $request) {
+            return \App\Exceptions\Handler::render($e, $request);
+        });
     })->create();

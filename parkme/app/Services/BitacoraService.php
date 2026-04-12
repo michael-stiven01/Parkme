@@ -1,0 +1,30 @@
+<?php
+
+namespace App\Services;
+
+use Illuminate\Support\Facades\Log;
+
+class BitacoraService
+{
+    /**
+     * Registra una acción en la bitácora del sistema.
+     *
+     * @param string $accion Acción realizada (ej: 'Ingreso de vehículo', 'Actualización de tarifa')
+     * @param string $modulo Módulo donde ocurrió (ej: 'Vehículos', 'Tarifas')
+     * @param int|null $id_usuario ID del usuario que realizó la acción
+     * @param string|null $detalle Detalles adicionales o en formato JSON/texto
+     * @return void
+     */
+    public static function registrar(string $accion, string $modulo, ?int $id_usuario = null, ?string $detalle = null): void
+    {
+        $mensaje = sprintf(
+            "Bitácora - Módulo: %s | Acción: %s | Usuario ID: %s | Detalle: %s",
+            $modulo,
+            $accion,
+            $id_usuario ?? 'N/A',
+            $detalle ?? 'N/A'
+        );
+
+        Log::info($mensaje);
+    }
+}

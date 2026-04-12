@@ -21,33 +21,47 @@
         <form wire:submit.prevent="registrar" class="space-y-3">
             
             <!-- Nombres -->
-            <div>
-                <label for="nombres" class="block mb-1 text-sm font-medium text-slate-300">
-                    Nombres <span class="text-red-500">*</span>
-                </label>
+            <div x-data="{ get cuenta() { return ($wire.get('nombres') || '').toString().length } }">
+                <div class="flex justify-between items-end mb-1">
+                    <label for="nombres" class="block text-sm font-medium text-slate-300">
+                        Nombres <span class="text-red-500">*</span>
+                    </label>
+                    <div class="text-xs transition-colors duration-200"
+                         :class="{
+                             'text-red-500 font-bold': cuenta >= 100,
+                             'text-yellow-500 font-medium': cuenta >= 85 && cuenta < 100,
+                             'text-slate-500': cuenta < 85
+                         }">
+                        <span x-text="cuenta"></span>/100
+                    </div>
+                </div>
                 <div class="relative">
                     <input type="text" id="nombres" wire:model.live="nombres" maxlength="100"
                         class="bg-slate-900 border @error('nombres') border-red-500 @else border-slate-700 @enderror text-white text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 transition-colors"
                         placeholder="John">
-                    <div class="absolute right-3 top-2.5 text-xs text-slate-500">
-                        {{ strlen($nombres) }}/100
-                    </div>
                 </div>
                 @error('nombres') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
             </div>
 
             <!-- Apellidos -->
-            <div>
-                <label for="apellidos" class="block mb-1 text-sm font-medium text-slate-300">
-                    Apellidos <span class="text-red-500">*</span>
-                </label>
+            <div x-data="{ get cuenta() { return ($wire.get('apellidos') || '').toString().length } }">
+                <div class="flex justify-between items-end mb-1">
+                    <label for="apellidos" class="block text-sm font-medium text-slate-300">
+                        Apellidos <span class="text-red-500">*</span>
+                    </label>
+                    <div class="text-xs transition-colors duration-200"
+                         :class="{
+                             'text-red-500 font-bold': cuenta >= 100,
+                             'text-yellow-500 font-medium': cuenta >= 85 && cuenta < 100,
+                             'text-slate-500': cuenta < 85
+                         }">
+                        <span x-text="cuenta"></span>/100
+                    </div>
+                </div>
                 <div class="relative">
                     <input type="text" id="apellidos" wire:model.live="apellidos" maxlength="100"
                         class="bg-slate-900 border @error('apellidos') border-red-500 @else border-slate-700 @enderror text-white text-sm rounded-xl focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 transition-colors"
                         placeholder="Doe">
-                    <div class="absolute right-3 top-2.5 text-xs text-slate-500">
-                        {{ strlen($apellidos) }}/100
-                    </div>
                 </div>
                 @error('apellidos') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
             </div>

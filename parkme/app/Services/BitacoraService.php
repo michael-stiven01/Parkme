@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Illuminate\Support\Facades\Log;
+use App\Helpers\SPHelper;
 
 class BitacoraService
 {
@@ -27,17 +28,11 @@ class BitacoraService
 
         Log::info($mensaje);
 
-        try {
-            $ip = request()->ip();
-            $id_empresa = null; // En el futuro auth()->user()->id_empresa si está autenticado
-            
-            \Illuminate\Support\Facades\DB::statement(
-                "CALL sp_registrar_bitacora(?, ?, ?, ?, ?, ?)", 
-                [$id_usuario, $id_empresa, $accion, $modulo, $detalle, $ip]
-            );
-        } catch (\Exception $e) {
-            // Silencioso si el SP no existe todavía
-            Log::warning("sp_registrar_bitacora no ejecutado: " . $e->getMessage());
-        }
+        $ip = request()->ip();
+        $id_empresa = null; // En el futuro auth()->user()->id_empresa si está autenticado
+        
+        SPHelper::ejecutar('sp_registrar_bitacora', [
+            $id_usuario, $id_empresa, $accion, $modulo, $detalle, $ip
+        ]);
     }
 }

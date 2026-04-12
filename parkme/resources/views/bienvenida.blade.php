@@ -25,11 +25,11 @@
 
     <!-- Actions -->
     <div class="space-y-4">
-        <a href="#" class="block w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-500/50 text-white font-semibold rounded-xl text-center transition-all duration-200 shadow-lg shadow-blue-500/30">
+        <a href="{{ route('register') }}" class="block w-full py-3.5 px-4 bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-500/50 text-white font-semibold rounded-xl text-center transition-all duration-200 shadow-lg shadow-blue-500/30">
             Crear cuenta
         </a>
         
-        <a href="#" class="block w-full py-3.5 px-4 bg-slate-700/50 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-700/50 text-white font-semibold rounded-xl text-center transition-all duration-200 border border-slate-600 hover:border-slate-500">
+        <a href="{{ route('login') }}" class="block w-full py-3.5 px-4 bg-slate-700/50 hover:bg-slate-700 focus:ring-4 focus:outline-none focus:ring-slate-700/50 text-white font-semibold rounded-xl text-center transition-all duration-200 border border-slate-600 hover:border-slate-500">
             Iniciar sesión
         </a>
     </div>

@@ -2,14 +2,33 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function () {
+Route::middleware('guest.custom')->group(function () {
     Route::get('/', function () {
         return view('bienvenida');
     })->name('welcome');
+
+    Route::get('/login', \App\Http\Livewire\Auth\Login::class)->name('login');
+    Route::get('/registro', \App\Http\Livewire\Auth\Registro::class)->name('register');
+    Route::get('/verificar-correo', \App\Http\Livewire\Auth\VerificarCorreo::class)->name('verification.notice');
+    
+    // Password Recovery Routes
+    Route::get('/recuperar-contrasena', \App\Http\Livewire\Auth\RecuperarContrasena::class)->name('password.request');
+    Route::get('/verificar-recuperacion', \App\Http\Livewire\Auth\VerificarRecuperacion::class)->name('verificar-recuperacion');
+    Route::get('/nueva-contrasena', \App\Http\Livewire\Auth\NuevaContrasena::class)->name('nueva-contrasena');
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth.custom')->group(function () {
     Route::get('/dashboard', function () {
         return "Dashboard (Protegido)";
     })->name('dashboard');
+
+    Route::get('/empresa/registrar', function () {
+        return "Registro de Empresa (Fase 5)";
+    })->name('empresa.registrar');
 });
+
+// Logout can be accessed to destroy the session (we POST to it)
+Route::post('/cerrar-sesion', function (\App\Services\SesionService $sesionService) {
+    $sesionService->cerrarSesion();
+    return redirect('/');
+})->name('logout')->middleware('auth.custom');

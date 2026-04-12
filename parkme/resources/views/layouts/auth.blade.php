@@ -23,6 +23,7 @@
 
     <main class="flex-grow flex items-center justify-center p-4 relative z-10 w-full h-full">
         @yield('content')
+        {{ $slot ?? '' }}
     </main>
 
     <!-- Livewire Scripts -->

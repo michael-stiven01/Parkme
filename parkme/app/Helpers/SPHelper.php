@@ -24,12 +24,32 @@ class SPHelper
 
         $query = "CALL {$sp}({$placeholders})";
 
+        Log::debug("[SPHelper] Ejecutando SP: {$sp}", [
+            'query'  => $query,
+            'params' => $params,
+        ]);
+
         try {
             // Por defecto, ejecutaremos siempre como select a menos que estemos seguros
             // de que el SP no retorna nada. DB::select soporta ambas nativamente para CALL
-            return DB::select($query, $params);
+            $resultado = DB::select($query, $params);
+
+            Log::debug("[SPHelper] Resultado de {$sp}", [
+                'resultado' => $resultado,
+            ]);
+
+            return $resultado;
             
         } catch (\Exception $e) {
+            // Log completo del error real de BD
+            Log::error("[SPHelper] ERROR en SP [{$sp}]", [
+                'mensaje'   => $e->getMessage(),
+                'codigo'    => $e->getCode(),
+                'query'     => $query,
+                'params'    => $params,
+                'traza'     => $e->getTraceAsString(),
+            ]);
+
             // Registramos el error a través de Bitácora previniendo logs infinitos en el mismo SP
             if ($sp !== 'sp_registrar_bitacora') {
                 try {
@@ -40,11 +60,10 @@ class SPHelper
                         $id_usuario, 
                         "Error en {$sp}: " . $e->getMessage()
                     );
-                } catch (\Exception $innerEx) {}
+                } catch (\Exception $innerEx) {
+                    Log::warning("[SPHelper] No se pudo registrar en bitácora: " . $innerEx->getMessage());
+                }
             }
-            
-            // También se escribe en los Logs de la aplicación directamente
-            Log::error("Error SP [{$sp}]: " . $e->getMessage());
             
             return null;
         }

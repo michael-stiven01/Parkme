@@ -6,6 +6,7 @@ use App\Helpers\SPHelper;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Log;
 use App\Mail\CodigoVerificacion;
 use App\Mail\CodigoRecuperacion;
 use Exception;
@@ -86,16 +87,31 @@ class AuthService
      */
     public function verificarCodigo(string $correo, string $codigo): bool
     {
+        Log::debug('[AuthService] Iniciando verificarCodigo', [
+            'correo' => $correo,
+            'codigo' => $codigo,
+        ]);
+
         $resultados = SPHelper::ejecutar('sp_verificar_codigo_email', [
             $correo,
             $codigo
         ]);
 
+        Log::debug('[AuthService] Resultado crudo de sp_verificar_codigo_email', [
+            'resultados' => $resultados,
+        ]);
+
         if (empty($resultados) || !isset($resultados[0])) {
+            Log::warning('[AuthService] El SP retornó vacío o null — posible fallo de BD o SP inexistente.');
             throw new Exception("Error al verificar el código.");
         }
 
         $respuesta = (object) $resultados[0];
+
+        Log::debug('[AuthService] Respuesta del SP', [
+            'estado'  => $respuesta->estado  ?? 'N/A',
+            'mensaje' => $respuesta->mensaje ?? 'N/A',
+        ]);
 
         if ((int)$respuesta->estado !== 1) {
             throw new Exception($respuesta->mensaje);

@@ -70,13 +70,22 @@ class VerificarCorreo extends Component
 
     public function reenviarCodigo(AuthService $authService)
     {
-        // For simplicity, we could generate a new code in DB. But in this task
-        // "registrarUsuario" is the only thing generating codes natively. 
-        // We'll throw an error if the user requests this without an actual update SP, 
-        // or we just resend the last code if it's still valid by reading it.
-        // As per task requirements, we just need the UI to have the button resend it.
-        // Wait! The user asked for a "Reenviar código" button. Let's create a minimal Logic.
-        $this->addError('general', 'La regeneración de códigos requerirá una actualización de Base de Datos futuramente.');
+        try {
+            $nuevoCodigo = \Illuminate\Support\Str::upper(\Illuminate\Support\Str::random(6));
+            $expiraEn    = now()->addMinutes(15)->format('Y-m-d H:i:s');
+
+            SPHelper::ejecutar('sp_guardar_codigo_recuperacion', [
+                $this->correo,
+                $nuevoCodigo,
+                $expiraEn,
+            ]);
+
+            $authService->enviarCodigoVerificacion($this->correo, $nuevoCodigo);
+
+            session()->flash('reenvio_ok', 'Se ha enviado un nuevo código a tu correo.');
+        } catch (\Exception $e) {
+            $this->addError('codigo', 'No se pudo reenviar el código. Intenta nuevamente.');
+        }
     }
 
     public function render()

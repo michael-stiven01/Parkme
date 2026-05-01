@@ -22,9 +22,7 @@ Route::middleware('auth.custom')->group(function () {
         return "Dashboard (Protegido)";
     })->name('dashboard');
 
-    Route::get('/empresa/registrar', function () {
-        return "Registro de Empresa (Fase 5)";
-    })->name('empresa.registrar');
+    Route::get('/empresa/registrar', \App\Http\Livewire\Empresa\RegistrarEmpresa::class)->name('empresa.registrar');
 });
 
 // Logout can be accessed to destroy the session (we POST to it)

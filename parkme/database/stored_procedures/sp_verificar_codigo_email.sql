@@ -3,8 +3,8 @@ DELIMITER //
 DROP PROCEDURE IF EXISTS sp_verificar_codigo_email //
 
 CREATE PROCEDURE sp_verificar_codigo_email(
-    IN p_correo VARCHAR(150),
-    IN p_codigo VARCHAR(10)
+    IN p_correo VARCHAR(150) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci,
+    IN p_codigo  VARCHAR(10)  CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci
 )
 BEGIN
     DECLARE v_id_usuario BIGINT;

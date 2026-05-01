@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Auth;
 
 use Livewire\Component;
 use App\Helpers\SPHelper;
+use App\Services\AuthService;
 use App\Services\SesionService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
@@ -82,7 +83,19 @@ class Login extends Component
 
             // Verificar si el correo ya fue confirmado
             if (!(bool)$usuario['CORREO_VERIFICADO']) {
-                // Generamos lógica para redirigir a `/verificar-correo` con el correo seteado en sesión
+                // Generar nuevo código y enviarlo por correo
+                $authService = app(AuthService::class);
+                $nuevoCodigo = Str::upper(Str::random(6));
+                $expiraEn    = now()->addMinutes(15)->format('Y-m-d H:i:s');
+
+                SPHelper::ejecutar('sp_guardar_codigo_recuperacion', [
+                    $this->correo,
+                    $nuevoCodigo,
+                    $expiraEn,
+                ]);
+
+                $authService->enviarCodigoVerificacion($this->correo, $nuevoCodigo);
+
                 session(['registro_correo' => $this->correo]);
                 return redirect()->route('verification.notice');
             }

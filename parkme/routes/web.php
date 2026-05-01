@@ -18,11 +18,10 @@ Route::middleware('guest.custom')->group(function () {
 });
 
 Route::middleware('auth.custom')->group(function () {
-    Route::get('/dashboard', function () {
-        return "Dashboard (Protegido)";
-    })->name('dashboard');
+    Route::get('/dashboard', \App\Http\Livewire\Dashboard::class)->name('dashboard');
 
     Route::get('/empresa/registrar', \App\Http\Livewire\Empresa\RegistrarEmpresa::class)->name('empresa.registrar');
+    Route::get('/configuracion/empresa', \App\Http\Livewire\Empresa\ConfigurarEmpresa::class)->name('empresa.configurar');
 });
 
 // Logout can be accessed to destroy the session (we POST to it)

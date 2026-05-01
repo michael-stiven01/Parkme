@@ -55,15 +55,14 @@
                         <x-atoms.icono nombre="users" tamaño="md" class="text-slate-400 group-hover:text-indigo-400 shrink-0 transition-colors" />
                         Usuarios
                     </a>
+                <li>
+                    <a href="{{ route('empresa.configurar') }}" class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
+                        <x-atoms.icono nombre="cog-6-tooth" tamaño="md" class="text-slate-400 group-hover:text-indigo-400 shrink-0 transition-colors" />
+                        Configuración
+                    </a>
                 </li>
             </ul>
         </li>
         @endif
-        <li class="mt-auto pb-4">
-            <a href="#" class="group -mx-2 flex gap-x-3 rounded-xl p-2.5 text-sm font-semibold leading-6 text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
-                <x-atoms.icono nombre="cog-6-tooth" tamaño="md" class="text-slate-400 group-hover:text-indigo-400 shrink-0 transition-colors" />
-                Configuración
-            </a>
-        </li>
     </ul>
 </nav>

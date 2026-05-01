@@ -24,6 +24,7 @@ Route::middleware('auth.custom')->group(function () {
     Route::get('/configuracion/empresa', \App\Http\Livewire\Empresa\ConfigurarEmpresa::class)->name('empresa.configurar');
     Route::get('/usuarios', \App\Http\Livewire\Usuarios\GestionUsuarios::class)->name('usuarios');
     Route::get('/clientes', \App\Http\Livewire\Clientes\GestionClientes::class)->name('clientes');
+    Route::get('/vehiculos', \App\Http\Livewire\Vehiculos\GestionVehiculos::class)->name('vehiculos');
 });
 
 // Logout can be accessed to destroy the session (we POST to it)

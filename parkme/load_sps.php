@@ -7,7 +7,14 @@ $sps = [
     'sp_actualizar_cliente.sql',
     'sp_cambiar_estado_cliente.sql',
     'sp_obtener_cliente.sql',
-    'sp_buscar_cliente_por_correo.sql'
+    'sp_buscar_cliente_por_correo.sql',
+    'sp_listar_vehiculos.sql',
+    'sp_crear_vehiculo.sql',
+    'sp_actualizar_vehiculo.sql',
+    'sp_cambiar_estado_vehiculo.sql',
+    'sp_buscar_vehiculo_por_placa.sql',
+    'sp_obtener_vehiculo.sql',
+    'sp_listar_tipos_vehiculo.sql'
 ];
 
 foreach ($sps as $sp) {

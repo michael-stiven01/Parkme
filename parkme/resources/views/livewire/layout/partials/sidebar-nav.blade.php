@@ -27,8 +27,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
-                        <x-atoms.icono nombre="user-group" tamaño="md" class="text-slate-400 group-hover:text-indigo-400 shrink-0 transition-colors" />
+                    <a href="{{ route('clientes') }}" class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors {{ request()->routeIs('clientes') ? 'bg-indigo-500/10 text-indigo-400' : '' }}">
+                        <x-atoms.icono nombre="user-group" tamaño="md" class="text-slate-400 group-hover:text-indigo-400 shrink-0 transition-colors {{ request()->routeIs('clientes') ? 'text-indigo-400' : '' }}" />
                         Clientes
                     </a>
                 </li>

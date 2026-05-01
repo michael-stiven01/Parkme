@@ -8,7 +8,7 @@
     <div class="sm:w-0 sm:flex-1">
         <h1 id="module-heading" class="text-2xl font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:tracking-tight flex items-center">
             @if($icono)
-                <x-atoms.icono :nombre="$icono" tamaño="lg" class="mr-3 text-gray-400 dark:text-gray-500" />
+                <x-atoms.icono nombre="{{ $icono }}" tamaño="lg" class="mr-3 text-gray-400 dark:text-gray-500" />
             @endif
             {{ $titulo }}
         </h1>

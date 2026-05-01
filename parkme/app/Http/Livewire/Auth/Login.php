@@ -83,18 +83,22 @@ class Login extends Component
 
             // Verificar si el correo ya fue confirmado
             if (!(bool)$usuario['CORREO_VERIFICADO']) {
-                // Generar nuevo código y enviarlo por correo
-                $authService = app(AuthService::class);
-                $nuevoCodigo = Str::upper(Str::random(6));
-                $expiraEn    = now()->addMinutes(15)->format('Y-m-d H:i:s');
+                $expiraEnDb = $usuario['CODIGO_EXPIRA_EN'] ?? null;
+                
+                // Si no hay código o ya expiró, generamos uno nuevo y lo enviamos
+                if (!$expiraEnDb || now()->greaterThan($expiraEnDb)) {
+                    $authService = app(AuthService::class);
+                    $nuevoCodigo = Str::upper(Str::random(6));
+                    $expiraEn    = now()->addMinutes(15)->format('Y-m-d H:i:s');
 
-                SPHelper::ejecutar('sp_guardar_codigo_recuperacion', [
-                    $this->correo,
-                    $nuevoCodigo,
-                    $expiraEn,
-                ]);
+                    SPHelper::ejecutar('sp_guardar_codigo_recuperacion', [
+                        $this->correo,
+                        $nuevoCodigo,
+                        $expiraEn,
+                    ]);
 
-                $authService->enviarCodigoVerificacion($this->correo, $nuevoCodigo);
+                    $authService->enviarCodigoVerificacion($this->correo, $nuevoCodigo);
+                }
 
                 session(['registro_correo' => $this->correo]);
                 return redirect()->route('verification.notice');

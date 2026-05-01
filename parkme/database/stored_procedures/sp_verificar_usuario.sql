@@ -15,7 +15,8 @@ BEGIN
         ROL,
         CORREO_VERIFICADO,
         ACTIVO,
-        id_empresa
+        id_empresa,
+        CODIGO_EXPIRA_EN
     FROM usuarios
     WHERE CORREO = p_correo;
 END //

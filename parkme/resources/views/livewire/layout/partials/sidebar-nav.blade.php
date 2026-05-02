@@ -4,8 +4,11 @@
             <div class="text-xs font-semibold leading-6 text-slate-400/80 tracking-wider">PRINCIPAL</div>
             <ul role="list" class="-mx-2 mt-2 space-y-1">
                 <li>
-                    <a href="#" class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold bg-indigo-500/10 text-indigo-400 hover:bg-slate-800 transition-colors">
-                        <x-atoms.icono nombre="chart-bar" tamaño="md" class="shrink-0" />
+                    <a href="{{ route('dashboard') }}"
+                        class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold transition-colors
+                            {{ request()->routeIs('dashboard') ? 'bg-indigo-500/10 text-indigo-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                        <x-atoms.icono nombre="chart-bar" tamaño="md"
+                            class="shrink-0 transition-colors {{ request()->routeIs('dashboard') ? 'text-indigo-400' : 'text-slate-400 group-hover:text-indigo-400' }}" />
                         Dashboard
                     </a>
                 </li>

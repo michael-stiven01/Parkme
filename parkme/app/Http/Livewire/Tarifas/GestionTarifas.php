@@ -11,6 +11,7 @@ class GestionTarifas extends Component
 {
     public $tarifas = [];
     public $tiposVehiculo = [];
+    public $busqueda = '';
 
     // Modal state
     public $modalVisible = false;
@@ -59,11 +60,19 @@ class GestionTarifas extends Component
             ->layout('layouts.app');
     }
 
+    public function updatedBusqueda()
+    {
+        $this->cargarDatos();
+    }
+
     public function cargarDatos()
     {
         $id_empresa = auth()->user()->id_empresa;
 
-        $resultadoTarifas = SPHelper::ejecutar('sp_listar_tarifas', [$id_empresa]);
+        $resultadoTarifas = SPHelper::ejecutar('sp_listar_tarifas', [
+            $id_empresa,
+            $this->busqueda ?: null
+        ]);
         $this->tarifas = $resultadoTarifas ?? [];
 
         $resultadoTipos = SPHelper::ejecutar('sp_listar_tipos_vehiculo');
@@ -148,6 +157,7 @@ class GestionTarifas extends Component
         if ($this->modoEdicion) {
             SPHelper::ejecutar('sp_actualizar_tarifa', [
                 $this->tarifa_id,
+                $id_tv,
                 $this->nombre,
                 $this->tipo_tarifa,
                 $this->valor,

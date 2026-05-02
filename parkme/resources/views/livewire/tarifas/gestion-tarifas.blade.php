@@ -23,6 +23,18 @@
             </div>
         @endif
 
+        <div class="sm:flex sm:items-center sm:justify-between mb-6">
+            <div class="w-full sm:max-w-xs">
+                <label for="busqueda" class="sr-only">Buscar tarifa</label>
+                <div class="relative">
+                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                        <x-atoms.icono nombre="magnifying-glass" tamaño="sm" class="text-gray-400 dark:text-gray-500" />
+                    </div>
+                    <input wire:model.live.debounce.300ms="busqueda" type="text" id="busqueda" class="block w-full rounded-md border-0 py-1.5 pl-10 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 dark:bg-slate-800 dark:text-white dark:ring-slate-700 dark:placeholder:text-slate-400" placeholder="Buscar por nombre...">
+                </div>
+            </div>
+        </div>
+
         <div class="mt-4 flow-root">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">

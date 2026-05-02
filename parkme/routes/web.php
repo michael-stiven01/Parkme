@@ -19,6 +19,9 @@ Route::middleware('guest.custom')->group(function () {
 
 Route::middleware('auth.custom')->group(function () {
     Route::get('/dashboard', \App\Http\Livewire\Dashboard::class)->name('dashboard');
+    Route::get('/parqueo/ingreso', \App\Http\Livewire\Parqueo\RegistrarIngreso::class)->name('parqueo.ingreso');
+    Route::get('/parqueo/salida', \App\Http\Livewire\Parqueo\RegistrarSalida::class)->name('parqueo.salida');
+    Route::get('/parqueo/historial', \App\Http\Livewire\Parqueo\HistorialRegistros::class)->name('parqueo.historial');
 
     Route::get('/empresa/registrar', \App\Http\Livewire\Empresa\RegistrarEmpresa::class)->name('empresa.registrar');
     Route::get('/configuracion/empresa', \App\Http\Livewire\Empresa\ConfigurarEmpresa::class)->name('empresa.configurar');

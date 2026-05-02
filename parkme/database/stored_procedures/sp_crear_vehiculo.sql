@@ -43,6 +43,7 @@ BEGIN
             NOW(),
             NOW()
         );
+        SELECT LAST_INSERT_ID() AS id_vehiculo;
     END IF;
 END //
 

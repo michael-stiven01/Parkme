@@ -4,6 +4,7 @@ DELIMITER //
 
 CREATE PROCEDURE sp_actualizar_tarifa(
     IN p_id_tarifa BIGINT,
+    IN p_id_tipo_vehiculo BIGINT,
     IN p_nombre VARCHAR(100),
     IN p_tipo_tarifa ENUM('por_hora', 'por_fraccion', 'plana_dia', 'especial'),
     IN p_valor DECIMAL(10,2),
@@ -13,6 +14,7 @@ CREATE PROCEDURE sp_actualizar_tarifa(
 )
 BEGIN
     UPDATE tarifas SET
+        id_tipo_vehiculo = p_id_tipo_vehiculo,
         NOMBRE = p_nombre,
         TIPO_TARIFA = p_tipo_tarifa,
         VALOR = p_valor,

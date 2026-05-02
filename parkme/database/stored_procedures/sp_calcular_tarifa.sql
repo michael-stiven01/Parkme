@@ -44,15 +44,8 @@ BEGIN
         (TIPO_TARIFA = 'por_hora') DESC  -- Default fallback
     LIMIT 1;
 
-    -- Si no se encontró ninguna tarifa, intentar buscar al menos una de tipo por_hora global
-    IF v_id_tarifa IS NULL THEN
-        SELECT id_tarifa, NOMBRE, TIPO_TARIFA, VALOR, FRACCION_MINUTOS
-        INTO v_id_tarifa, v_nombre_tarifa, v_tipo_tarifa, v_valor, v_fraccion_minutos
-        FROM tarifas
-        WHERE id_empresa = p_id_empresa AND ACTIVO = 1
-        ORDER BY id_tarifa ASC
-        LIMIT 1;
-    END IF;
+    -- Si no se encontró tarifa específica ni genérica, no aplicar ninguna
+    -- (la consulta anterior ya cubre: tipo específico OR id_tipo_vehiculo IS NULL)
 
     -- Calcular el cobro si tenemos una tarifa
     IF v_id_tarifa IS NOT NULL THEN

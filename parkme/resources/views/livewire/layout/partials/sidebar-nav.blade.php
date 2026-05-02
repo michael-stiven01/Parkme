@@ -10,9 +10,30 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold text-slate-300 hover:bg-slate-800 hover:text-white transition-colors">
-                        <x-atoms.icono nombre="arrow-right-circle" tamaño="md" class="text-slate-400 group-hover:text-indigo-400 shrink-0 transition-colors" />
-                        Ingreso/Salida
+                    <a href="{{ route('parqueo.ingreso') }}"
+                        class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold transition-colors
+                            {{ request()->routeIs('parqueo.ingreso') ? 'bg-indigo-500/10 text-indigo-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                        <x-atoms.icono nombre="arrow-right-circle" tamaño="md"
+                            class="shrink-0 transition-colors {{ request()->routeIs('parqueo.ingreso') ? 'text-indigo-400' : 'text-slate-400 group-hover:text-indigo-400' }}" />
+                        Ingreso
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('parqueo.salida') }}"
+                        class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold transition-colors
+                            {{ request()->routeIs('parqueo.salida') ? 'bg-rose-500/10 text-rose-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                        <x-atoms.icono nombre="arrow-left-circle" tamaño="md"
+                            class="shrink-0 transition-colors {{ request()->routeIs('parqueo.salida') ? 'text-rose-400' : 'text-slate-400 group-hover:text-rose-400' }}" />
+                        Salida
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('parqueo.historial') }}"
+                        class="group flex gap-x-3 rounded-xl p-2.5 text-sm leading-6 font-semibold transition-colors
+                            {{ request()->routeIs('parqueo.historial') ? 'bg-amber-500/10 text-amber-400' : 'text-slate-300 hover:bg-slate-800 hover:text-white' }}">
+                        <x-atoms.icono nombre="clock" tamaño="md"
+                            class="shrink-0 transition-colors {{ request()->routeIs('parqueo.historial') ? 'text-amber-400' : 'text-slate-400 group-hover:text-amber-400' }}" />
+                        Historial
                     </a>
                 </li>
             </ul>

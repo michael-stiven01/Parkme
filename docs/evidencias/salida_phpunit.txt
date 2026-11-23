@@ -1,0 +1,98 @@
+PHPUnit 12.5.17 by Sebastian Bergmann and contributors.
+
+Runtime:       PHP 8.4.28 with Xdebug 3.5.3
+Configuration: C:\Users\Michael Vergara\Documents\Projects\Parkme\parkme\phpunit.xml
+
+........................................                          40 / 40 (100%)
+
+Time: 01:03.764, Memory: 358.00 MB
+
+Auth Service (Tests\Unit\Services\AuthService)
+ ✔ UT-05 Registra al usuario con contraseña cifrada, código de 6 caracteres que vence en 15 min y lo envía por correo
+ ✔ UT-06 Verificar código devuelve true cuando el SP responde estado = 1
+ ✔ UT-07 Verificar código lanza excepción con el mensaje del SP cuando estado = 0
+ ✔ UT-08 Verificar código lanza "Error al verificar el código." si el SP no devuelve filas
+ ✔ UT-09 Envía el código de recuperación con el correo CodigoRecuperacion al destinatario correcto
+ ✔ UT-36 Si sp_crear_usuario falla, el registro lanza excepción y no envía el código de verificación
+
+Bitacora YSesion Service (Tests\Unit\Services\BitacoraYSesionService)
+ ✔ UT-17 Bitácora con usuario y detalle nulos: escribe "N/A" en el log y envía null al SP con la IP
+ ✔ UT-18 Iniciar sesión autentica al usuario y usuarioActual() no expone la contraseña
+ ✔ UT-19 Cerrar sesión deja al usuario como invitado y regenera el token CSRF
+
+Calculo Tarifa (Tests\Unit\BaseDatos\CalculoTarifa)
+ ✔ UT-27 Tarifa por hora: una estadía de 0 minutos cobra la hora mínima ($3.000)
+ ✔ UT-28 Tarifa por hora: 60 min cobra 1 hora y 61 min cobra 2 horas (redondeo hacia arriba)
+ ✔ UT-29 Tarifa por fracción de 15 min: 31 minutos cobra 3 fracciones ($2.400)
+ ✔ UT-30 Tarifa plana por día: 25 horas cobra 2 días ($40.000)
+ ✔ UT-31 Tarifa especial nocturna 22:00–06:00: salida a las 02:30 aplica la especial ($10.000)
+ ✔ UT-32 Fuera de la franja especial (salida 14:00) aplica la tarifa por hora ($9.000)
+ ✔ UT-33 La tarifa del tipo de vehículo prevalece sobre la genérica (moto $2.000 vs. auto $6.000)
+ ✔ UT-34 Con la única tarifa inactiva: id_tarifa null, "Sin Tarifa" y cobro $0
+ ✔ UT-35 Salida anterior al ingreso (-30 min): no cobra negativo, cobra el mínimo ($3.000)
+
+Control De Acceso Middleware (Tests\Unit\Middleware\ControlDeAccesoMiddleware)
+ ✔ UT-20 Sin sesión, una ruta protegida redirige al login
+ ✔ UT-21 Correo sin verificar: redirige a verificación, salvo si ya está en esa pantalla
+ ✔ UT-22 Usuario verificado sin empresa (id_empresa null) es obligado a registrar la empresa
+ ✔ UT-23 Usuario autenticado, verificado y con empresa accede a la ruta protegida
+ ✔ UT-24 Las pantallas de invitado envían al dashboard a quien ya tiene sesión
+
+Example (Tests\Feature\Example)
+ ✔ The application returns a successful response
+
+Handler (Tests\Unit\Exceptions\Handler)
+ ✔ UT-25 Registra en el log las excepciones no controladas e ignora los errores HTTP (404)
+ ✔ UT-26 Responde 500 genérico sin exponer el detalle interno, y delega los errores HTTP a Laravel
+
+Parqueo Service (Tests\Unit\Services\ParqueoService)
+ ✔ UT-10 Registrar ingreso envía los 4 parámetros en orden y devuelve la fila del SP como arreglo
+ ✔ UT-11 Registrar ingreso devuelve error SP_SIN_RESPUESTA cuando la BD no responde
+ ✔ UT-12 Registrar salida propaga el error REGISTRO_ACTIVO_NO_ENCONTRADO del SP
+ ✔ UT-13 Ticket de ingreso sin correo del cliente: no envía, no marca en BD y deja advertencia
+ ✔ UT-14 Ticket de salida con correo: se envía al cliente y se marca como enviado en la BD
+ ✔ UT-15 Ticket de ingreso sin id_registro: envía el correo pero no intenta marcarlo en la BD
+ ✔ UT-16 Si el servidor de correo falla, captura la excepción, la registra y no marca el ticket
+ ✔ UT-37 Registrar salida devuelve error SP_SIN_RESPUESTA cuando la BD no responde
+ ✔ UT-38 Ticket de salida: sin correo no envía, y si el SMTP falla no propaga el error ni marca el ticket
+ ✔ UT-39 Ticket de ingreso con correo: se envía al cliente y se marca como enviado en la BD
+
+SPHelper (Tests\Unit\Helpers\SPHelper)
+ ✔ UT-01 Construye el CALL con un placeholder por parámetro y devuelve las filas
+ ✔ UT-02 Sin parámetros genera "CALL sp()" sin placeholders
+ ✔ UT-03 Ante una excepción de BD devuelve null y registra el fallo en la bitácora
+ ✔ UT-04 Si falla sp_registrar_bitacora no reintenta registrar (evita el ciclo infinito)
+
+OK (40 tests, 139 assertions)
+
+Generating code coverage report in Clover XML format ... done [00:00.012]
+
+Generating code coverage report in HTML format ... done [00:00.508]
+
+
+Code Coverage Report:
+  2026-11-22 22:54:02
+
+ Summary:
+  Classes: 75.00% (6/8)
+  Methods: 85.00% (17/20)
+  Paths:   77.78% (42/54)
+  Branches:   93.02% (80/86)
+  Lines:   98.22% (166/169)
+
+App\Exceptions\Handler
+  Methods:   0.00% ( 0/ 2)   Paths:  57.14% (  4/  7)   Branches:  84.62% ( 11/ 13)   Lines:  93.33% ( 14/ 15)
+App\Helpers\SPHelper
+  Methods:   0.00% ( 0/ 1)   Paths:  57.14% (  4/  7)   Branches:  73.33% ( 11/ 15)   Lines:  93.75% ( 30/ 32)
+App\Http\Middleware\AutenticacionMiddleware
+  Methods: 100.00% ( 2/ 2)   Paths:  77.78% (  7/  9)   Branches: 100.00% ( 13/ 13)   Lines: 100.00% ( 11/ 11)
+App\Http\Middleware\SoloInvitadosMiddleware
+  Methods: 100.00% ( 2/ 2)   Paths: 100.00% (  3/  3)   Branches: 100.00% (  4/  4)   Lines: 100.00% (  4/  4)
+App\Services\AuthService
+  Methods: 100.00% ( 4/ 4)   Paths:  70.00% (  7/ 10)   Branches: 100.00% ( 12/ 12)   Lines: 100.00% ( 42/ 42)
+App\Services\BitacoraService
+  Methods: 100.00% ( 1/ 1)   Paths: 100.00% (  1/  1)   Branches: 100.00% (  1/  1)   Lines: 100.00% ( 13/ 13)
+App\Services\ParqueoService
+  Methods: 100.00% ( 4/ 4)   Paths:  91.67% ( 11/ 12)   Branches: 100.00% ( 22/ 22)   Lines: 100.00% ( 41/ 41)
+App\Services\SesionService
+  Methods: 100.00% ( 4/ 4)   Paths: 100.00% (  5/  5)   Branches: 100.00% (  6/  6)   Lines: 100.00% ( 11/ 11)

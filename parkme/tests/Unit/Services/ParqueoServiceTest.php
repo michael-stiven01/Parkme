@@ -199,4 +199,27 @@ class ParqueoServiceTest extends TestCase
         Log::shouldHaveReceived('warning')->once();
         Log::shouldHaveReceived('error')->once()->withArgs(fn ($m) => str_contains($m, 'ticket de salida'));
     }
+
+    /**
+     * UT-39 · Caso de éxito.
+     * Con correo y número de registro, el ticket de ingreso se envía al cliente
+     * con los datos del registro (placa y cupo) y después se marca como enviado
+     * con sp_marcar_ticket_ingreso(id_registro).
+     */
+    #[TestDox('UT-39 Ticket de ingreso con correo: se envía al cliente y se marca como enviado en la BD')]
+    public function test_ut39_ticket_ingreso_se_envia_y_se_marca(): void
+    {
+        Mail::fake();
+        DB::shouldReceive('select')
+            ->once()
+            ->with('CALL sp_marcar_ticket_ingreso(?)', [99])
+            ->andReturn([]);
+
+        $this->servicio->enviarTicketIngreso([
+            'id_registro' => 99, 'correo_cliente' => 'cliente@parkme.test', 'placa' => 'ABC123', 'codigo_cupo' => 'A-05',
+        ]);
+
+        Mail::assertSent(TicketIngreso::class, fn ($m) => $m->hasTo('cliente@parkme.test')
+            && $m->datos['placa'] === 'ABC123' && $m->datos['codigo_cupo'] === 'A-05');
+    }
 }

@@ -566,11 +566,13 @@ def construir(salida: Path) -> None:
                "componentes mezclan presentación y flujo de interfaz, y su verificación corresponde a pruebas de componente o de "
                "extremo a extremo, no a pruebas unitarias. Por eso quedaron fuera del alcance de esta entrega, y ese alcance está "
                "declarado en <i>phpunit.xml</i>."))
-    h.append(p("Hallazgo durante la construcción de la suite", "h2"))
-    h.append(p("Al escribir las pruebas de <i>AuthService</i> se encontró un defecto real: <i>registrarUsuario</i> ignoraba el null que "
-               "devuelve <i>SPHelper</i> cuando falla <i>sp_crear_usuario</i>, así que enviaba un código de verificación y reportaba el "
-               "registro como exitoso aunque la cuenta no existiera. Primero se escribió la prueba UT-36 y se comprobó que fallaba. Después "
-               "se corrigió el servicio para que lance una excepción antes de enviar el correo, y con eso la prueba pasa."))
+    h.append(KeepTogether([
+        p("Hallazgo durante la construcción de la suite", "h2"),
+        p("Al escribir las pruebas de <i>AuthService</i> se encontró un defecto real: <i>registrarUsuario</i> ignoraba el null que "
+          "devuelve <i>SPHelper</i> cuando falla <i>sp_crear_usuario</i>, así que enviaba un código de verificación y reportaba el "
+          "registro como exitoso aunque la cuenta no existiera. Primero se escribió la prueba UT-36 y se comprobó que fallaba. Después "
+          "se corrigió el servicio para que lance una excepción antes de enviar el correo, y con eso la prueba pasa."),
+    ]))
 
     # ── Sección 4 ──
     h.append(PageBreak())

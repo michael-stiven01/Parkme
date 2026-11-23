@@ -41,8 +41,12 @@ class AuthService
             $expiraEn
         ]);
 
-        // Note: sp_crear_usuario does not return rows based on its definition, 
-        // it just inserts or fails. If SP fails, SPHelper will throw an exception.
+        // sp_crear_usuario no devuelve filas: si inserta, SPHelper devuelve [];
+        // si falla, SPHelper captura el error, lo registra y devuelve null.
+        // En ese caso la cuenta no existe: no se envía código ni se reporta éxito.
+        if ($resultado === null) {
+            throw new Exception('No se pudo guardar el usuario. Intenta de nuevo en unos minutos.');
+        }
 
         // 5. Send Verification Email
         $this->enviarCodigoVerificacion($datos['correo'], $codigo);
